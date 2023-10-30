@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:peanut_api/modules/main/controller/nav_controller.dart';
+import 'package:peanut_api/modules/splash/controller/splash_controlle.dart';
 import 'package:peanut_api/modules/trades/controller/trade_controller.dart';
 
 class MainBindigns extends Bindings {
@@ -7,5 +8,6 @@ class MainBindigns extends Bindings {
   void dependencies() {
     Get.lazyPut(() => NavController());
     Get.lazyPut(() => TradeController());
+    Get.put(SplashController());
   }
 }

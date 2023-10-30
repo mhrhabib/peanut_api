@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:peanut_api/common/loader.dart';
 import 'package:peanut_api/modules/trades/controller/trade_controller.dart';
 import 'package:peanut_api/modules/trades/model/trade_model.dart';
+import 'package:peanut_api/routes/app_routes.dart';
 
 class TradesScreen extends StatelessWidget {
   TradesScreen({super.key});
@@ -16,33 +17,25 @@ class TradesScreen extends StatelessWidget {
         backgroundColor: Colors.purple,
         title: const Text("Trades"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Obx(
-              () => controller.isLoading.value
-                  ? const Loader()
-                  : ListView.builder(
-                      itemCount: controller.trades.length,
-                      itemBuilder: (context, index) {
-                        TradeModel trade = controller.trades[index];
-                        if (controller.trades.isEmpty) {
-                          return const Center(
-                            child: Text("Trades are empty"),
-                          );
-                        }
-                        if (controller.trades.isNotEmpty) {
-                          return _buildTradeCard(trade);
-                        }
-                        return const Center(
-                          child: Text("server Error"),
-                        );
-                      },
-                    ),
+      body: controller.obx(
+        (state) => Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: state!.length,
+                itemBuilder: (context, index) {
+                  TradeModel trade = state[index];
+
+                  if (state.isNotEmpty) {
+                    return _buildTradeCard(trade);
+                  }
+                  return const Center(
+                    child: Text("server Error"),
+                  );
+                },
+              ),
             ),
-          ),
-          Obx(
-            () => controller.trades.isEmpty
+            state.isEmpty
                 ? const SizedBox.shrink()
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -54,9 +47,27 @@ class TradesScreen extends StatelessWidget {
                       Text(controller.calculateProfit().toStringAsFixed(2)),
                     ],
                   ),
-          ),
-          const SizedBox(height: 20),
-        ],
+            const SizedBox(height: 20),
+          ],
+        ),
+        onEmpty: const Center(
+          child: Text("Trades are empty"),
+        ),
+        onLoading: const Loader(),
+        onError: (error) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Token expired login again"),
+              ElevatedButton(
+                onPressed: () {
+                  Get.offAllNamed(AppRoutes.loginScreen);
+                },
+                child: const Text("Go to login screen"),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,8 @@
+import 'package:get/get.dart';
 import 'package:peanut_api/api/base_client.dart';
 import 'package:peanut_api/common/storage.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:peanut_api/modules/trades/controller/trade_controller.dart';
 import 'package:peanut_api/modules/trades/model/trade_model.dart';
 import 'package:peanut_api/utils/urls.dart';
 
@@ -24,7 +26,12 @@ class TradesRepo {
         return tradeList;
       }
       throw '${response.statusCode}+ ${response.statusMessage}';
-    } catch (e) {
+    } on dio.DioException catch (e) {
+      if (e.type == dio.DioExceptionType.badResponse) {
+        Get.find<TradeController>().isLoading.value = false;
+      } else {
+        Get.find<TradeController>().isLoading.value = false;
+      }
       rethrow;
     }
   }

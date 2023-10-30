@@ -10,12 +10,11 @@ class NavController extends GetxController {
   List<Widget> screens = [
     TradesScreen(),
     ProfileScreen(),
-    LogoutScreen(),
+    const LogoutScreen(),
   ];
 
   changeIndex(int i) {
     index.value = i;
     update();
-    print(i);
   }
 }

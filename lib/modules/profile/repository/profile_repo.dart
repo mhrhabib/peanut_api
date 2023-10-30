@@ -1,10 +1,11 @@
 import 'package:peanut_api/api/base_client.dart';
 import 'package:peanut_api/common/storage.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:peanut_api/modules/profile/model/profile_model.dart';
 import 'package:peanut_api/utils/urls.dart';
 
-class TradesRepo {
-  static Future getTrades() async {
+class ProfileRepo {
+  static Future<ProfileModel> getProfile() async {
     var data = {
       'login': storage.read(StoreKeys.emailId),
       'token': storage.read(StoreKeys.apiToken).toString(),
@@ -16,7 +17,7 @@ class TradesRepo {
 
       if (response.statusCode == 200) {
         print('profile>>>>>>>>>>>> ${response.data}');
-        return response.data;
+        return ProfileModel.fromJson(response.data);
       }
       throw '${response.statusCode}+ ${response.statusMessage}';
     } catch (e) {
