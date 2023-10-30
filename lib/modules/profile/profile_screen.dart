@@ -18,25 +18,41 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: Obx(() => profileController.isLoading.value
           ? const Loader()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace(20),
-                buildRow(
-                    title: "Address",
-                    value: profileController.profle.value.address),
-                buildRow(
-                    title: "Balance",
-                    value: profileController.profle.value.balance.toString()),
-                buildRow(
-                    title: "City", value: profileController.profle.value.city),
-                buildRow(
-                    title: "Country",
-                    value: profileController.profle.value.country),
-                buildRow(
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalSpace(20),
+                  buildRow(
+                      title: "Address",
+                      value: profileController.profle.value.address),
+                  buildRow(
+                      title: "Balance",
+                      value: profileController.profle.value.balance.toString()),
+                  buildRow(
+                      title: "City",
+                      value: profileController.profle.value.city),
+                  buildRow(
+                      title: "Country",
+                      value: profileController.profle.value.country),
+                  buildRow(
                     title: "Currency",
-                    value: profileController.profle.value.currency.toString()),
-              ],
+                    value: profileController.profle.value.currency.toString(),
+                  ),
+                  verticalSpace(30),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Text("Last four numbers of Phonw Number"),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      profileController.lastDigit.value,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             )),
     );
   }

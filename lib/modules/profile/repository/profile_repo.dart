@@ -24,4 +24,24 @@ class ProfileRepo {
       rethrow;
     }
   }
+
+  static Future getPhoneNumber() async {
+    var data = {
+      'login': storage.read(StoreKeys.emailId),
+      'token': storage.read(StoreKeys.apiToken).toString(),
+    };
+    print(data);
+    try {
+      dio.Response response =
+          await BaseClient.post(url: Urls.lastFourDigits, payload: data);
+
+      if (response.statusCode == 200) {
+        print('profile>>>>>>>>>>>> ${response.data}');
+        return response.data;
+      }
+      throw '${response.statusCode}+ ${response.statusMessage}';
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

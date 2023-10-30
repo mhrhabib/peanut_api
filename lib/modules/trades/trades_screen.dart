@@ -4,6 +4,7 @@ import 'package:peanut_api/common/loader.dart';
 import 'package:peanut_api/modules/trades/controller/trade_controller.dart';
 import 'package:peanut_api/modules/trades/model/trade_model.dart';
 import 'package:peanut_api/routes/app_routes.dart';
+import 'package:peanut_api/utils/responsive.dart';
 
 class TradesScreen extends StatelessWidget {
   TradesScreen({super.key});
@@ -18,23 +19,23 @@ class TradesScreen extends StatelessWidget {
         title: const Text("Trades"),
       ),
       body: controller.obx(
-        (state) => Column(
+        (state) => ListView(
           children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: state!.length,
-                itemBuilder: (context, index) {
-                  TradeModel trade = state[index];
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: state!.length,
+              itemBuilder: (context, index) {
+                TradeModel trade = state[index];
 
-                  if (state.isNotEmpty) {
-                    return _buildTradeCard(trade);
-                  }
-                  return const Center(
-                    child: Text("server Error"),
-                  );
-                },
-              ),
+                if (state.isNotEmpty) {
+                  return _buildTradeCard(trade);
+                }
+                return const Center(
+                  child: Text("server Error"),
+                );
+              },
             ),
+            verticalSpace(20),
             state.isEmpty
                 ? const SizedBox.shrink()
                 : Row(
@@ -46,8 +47,7 @@ class TradesScreen extends StatelessWidget {
                       ),
                       Text(controller.calculateProfit().toStringAsFixed(2)),
                     ],
-                  ),
-            const SizedBox(height: 20),
+                  )
           ],
         ),
         onEmpty: const Center(
@@ -80,7 +80,7 @@ class TradesScreen extends StatelessWidget {
           children: [
             const Text('Current price:'),
             Text(
-              trade.currentPrice.toString(),
+              trade.currentPrice!.toStringAsFixed(3),
             ),
           ],
         ),
@@ -94,7 +94,7 @@ class TradesScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Profit'),
-            Text(trade.profit.toString()),
+            Text(trade.profit!.toStringAsFixed(2)),
           ],
         ),
       ),
