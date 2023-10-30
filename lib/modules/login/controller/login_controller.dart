@@ -28,7 +28,7 @@ class LoginController extends GetxController {
       storage.write(StoreKeys.apiToken, response.token);
       storage.write(StoreKeys.emailId, emailController.value.text);
       storage.write(StoreKeys.password, passwordController.value.text);
-      Get.toNamed(AppRoutes.tradesScreen);
+      Get.toNamed(AppRoutes.mainScreen);
       Get.snackbar("Success", "Login Successfully");
       isLoading.value = false;
     } else {

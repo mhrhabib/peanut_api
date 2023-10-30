@@ -7,7 +7,7 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: SpinKitCircle(color: Colors.white),
+      child: SpinKitWaveSpinner(color: Colors.purple),
     );
   }
 }

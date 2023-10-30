@@ -6,10 +6,10 @@ class TradeModel {
   double? openPrice;
   String? openTime;
   double? profit;
-  int? sl;
-  int? swaps;
+  double? sl;
+  double? swaps;
   String? symbol;
-  int? tp;
+  double? tp;
   int? ticket;
   int? type;
   double? volume;

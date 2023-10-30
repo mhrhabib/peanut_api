@@ -3,4 +3,5 @@ class Urls {
   static const login =
       "$baseUrl/ClientCabinetBasic/IsAccountCredentialsCorrect";
   static const trades = '$baseUrl/ClientCabinetBasic/GetOpenTrades';
+  static const profile = '$baseUrl/ClientCabinetBasic/GetAccountInformation';
 }
